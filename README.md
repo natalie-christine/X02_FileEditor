@@ -14,6 +14,8 @@ Schritt 3: Werte verändern und speichern
 Implementiere eine Funktion, die es dem Benutzer ermöglicht, Werte in der Oberfläche zu ändern.
 Verwende Benutzereingaben, um die gewünschten Änderungen vorzunehmen, z.B. durch Eingabe von Zeilen- und Spaltennummern sowie neuen Werten.
 Speichere die geänderten Daten in der CSV-Datei und archiviere die ursprüngliche CSV-Datei, um Änderungen nachverfolgen zu können.
+
+
 Schritt 4: Erweiterung der Funktionen
 
 Füge Validierungen hinzu, um sicherzustellen, dass die Benutzereingaben korrekt sind und dass keine ungültigen Werte gespeichert werden.
