@@ -17,11 +17,6 @@ Schritt 4: Erweiterung der Funktionen
 Füge Validierungen hinzu, um sicherzustellen, dass die Benutzereingaben korrekt sind und dass keine ungültigen Werte gespeichert werden.
 Implementiere Fehlerbehandlung, um mit unerwarteten Eingaben oder Dateifehlern umzugehen und dem Benutzer entsprechende Rückmeldungen zu geben.
 Füge Optionen hinzu, um neue Daten zur CSV-Datei hinzuzufügen oder vorhandene Daten zu löschen.
-CSV-Datei:
 
-Datum,Zahl1,Zahl2
-01.01.2022,10.5,20.75
-02.01.2022,15.25,25.5
-03.01.2022,20.75,30.25
-04.01.2022,25.5,35.75
-05.01.2022,30.25,40.5
+
+
