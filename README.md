@@ -7,6 +7,8 @@ Schritt 2: Anzeige in einer Oberfläche (Console)
 
 Erstelle eine Konsolenanwendung, die die gelesenen Daten aus der CSV-Datei auf der Konsole anzeigt.
 Formatieren Sie die Ausgabe übersichtlich, damit Datumswerte und Dezimalzahlen klar erkennbar sind.
+
+
 Schritt 3: Werte verändern und speichern
 
 Implementiere eine Funktion, die es dem Benutzer ermöglicht, Werte in der Oberfläche zu ändern.
