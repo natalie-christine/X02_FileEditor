@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace A02_CSV
 {
-    internal class WriteCSV
+    public class WriteCSV
     {
         public void CSV_Writer(List<Data> dataList)
         {
+            string outputPath = "C:\\Users\\nscho\\Documents\\B01\\CSV_Export.txt";
 
             try
             {
-                string outputPath = "C:\\Users\\nscho\\Documents\\B02\\B00_output.txt";
-
                 using (StreamWriter writer = new StreamWriter(outputPath))
                 {
+                    writer.WriteLine("Datum,Zahl1,Zahl2,Text");
+
                     foreach (Data data in dataList)
                     {
-                        writer.WriteLine($"{data.Date},{data.Number1},{data.Number2},{data.Input}");
+                        writer.WriteLine(data.ToString());
                     }
                 }
+
                 Console.WriteLine("Data has been written to output file.");
             }
             catch (Exception ex)

@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.IO;
 
 namespace A02_CSV
 {
     internal class ReadCSV
     {
-      
-        WriteCSV writeCSV = new WriteCSV(); 
+        WriteCSV writeCSV = new WriteCSV();
 
-        public void CSV_Reader()
+        public List<Data> CSV_Reader()
         {
             string path = "C:\\Users\\nscho\\Documents\\B01\\01_InputFile.txt";
 
-
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
             {
                 Console.WriteLine("File does not exist");
-                return;
+                return new List<Data>();
             }
 
             List<string> contentList = new List<string>();
@@ -31,50 +28,68 @@ namespace A02_CSV
                     string line;
                     while ((line = reader.ReadLine()) != null)
                     {
-
                         contentList.Add(line);
                     }
                 }
 
                 List<Data> dataList = new List<Data>();
 
-                int max = contentList.Count;
-
-                for (int i = 0; i < max; i++)
+                for (int i = 0; i < contentList.Count; i++)
                 {
+                    // Überspringe die Kopfzeile
+                    if (i == 0) continue;
+
                     string[] parts = contentList[i].Split(',');
 
                     if (parts.Length == 4)
                     {
-                        DateTime date;
-                        decimal number1, number2;
-                        string input;
+                        DateTime date; decimal number1, number2;
+                        string text = parts[3].Trim();
 
-                        if (DateTime.TryParse(parts[0], out date) &&
-                            decimal.TryParse(parts[1], out number1) &&
-                            decimal.TryParse(parts[2], out number2))
+                        bool isDateValid = DateTime.TryParseExact( parts[0].Trim(), "dd.MM.yyyy",CultureInfo.InvariantCulture,DateTimeStyles.None, out date );
+
+                        bool isNumber1Valid = decimal.TryParse( parts[1].Trim().Replace(".", ","),NumberStyles.Number,CultureInfo.InvariantCulture, out number1 );
+
+                        bool isNumber2Valid = decimal.TryParse( parts[2].Trim().Replace(".", ","), NumberStyles.Number, CultureInfo.InvariantCulture, out number2 );
+
+                      
+                        if (isDateValid && isNumber1Valid && isNumber2Valid)
                         {
-                            input = parts[3];
-                            Data newData = new Data(date, number1, number2, input);
+                            Data newData = new Data(date, number1, number2, text);
                             dataList.Add(newData);
-                            Console.WriteLine(newData.ToString());
+                          //  Console.WriteLine(newData);
                         }
-
-
+                        else
+                        {
+                            if (!isDateValid)
+                            {
+                                Console.WriteLine($"Invalid date: {parts[0]}");
+                            }
+                            if (!isNumber1Valid)
+                            {
+                                Console.WriteLine($"Invalid number1: {parts[1]}");
+                            }
+                            if (!isNumber2Valid)
+                            {
+                                Console.WriteLine($"Invalid number2: {parts[2]}");
+                            }
+                   
+                            Data originalData = new Data(parts[0].Trim(), parts[1].Trim(), parts[2].Trim(), text);
+                            dataList.Add(originalData);
+                        //    Console.WriteLine($"Original: {originalData}");
+                        }
                     }
-                    Console.ReadLine();
-
                 }
-                writeCSV.CSV_Writer(dataList);
 
+                // Speichern der Daten
+              //  writeCSV.CSV_Writer(dataList);
+                return dataList;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+                return new List<Data>();
             }
-
         }
     }
-
-
 }
