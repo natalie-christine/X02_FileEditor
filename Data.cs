@@ -10,6 +10,9 @@ namespace A02_CSV
         public decimal? Number2 { get; set; }
         public string Input { get; set; }
 
+        public Dictionary<string, string> AdditionalColumns { get; set; } = new Dictionary<string, string>();
+
+
 
         public string OriginalDate { get; set; }
         public string OriginalNumber1 { get; set; }
@@ -32,17 +35,22 @@ namespace A02_CSV
             OriginalNumber2 = originalNumber2;
             Input = input;
         }
-
+      
         public override string ToString()
         {
+            string additionalColumns = string.Join(",", AdditionalColumns.Select(kv => kv.Value));
             if (Date.HasValue && Number1.HasValue && Number2.HasValue)
             {
-                return $"{Date:dd.MM.yyyy},{Number1.Value.ToString(" ##.0##,##", CultureInfo.InvariantCulture)},{Number2.Value.ToString(" ##.###,##", CultureInfo.InvariantCulture)},{Input}";
+           
+                return $"{Date:dd.MM.yyyy},{Number1.Value.ToString("0.##", NumberFormatInfo.InvariantInfo)},{Number2.Value.ToString("0.##", NumberFormatInfo.InvariantInfo)},{Input}{(string.IsNullOrEmpty(additionalColumns) ? "" : "," + additionalColumns)}";
             }
             else
             {
                 return $"{OriginalDate},{OriginalNumber1},{OriginalNumber2},{Input}";
             }
+
         }
+
+
     }
 }

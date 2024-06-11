@@ -48,16 +48,16 @@ namespace A02_CSV
 
                         bool isDateValid = DateTime.TryParseExact( parts[0].Trim(), "dd.MM.yyyy",CultureInfo.InvariantCulture,DateTimeStyles.None, out date );
 
-                        bool isNumber1Valid = decimal.TryParse( parts[1].Trim().Replace(".", ","),NumberStyles.Number,CultureInfo.InvariantCulture, out number1 );
+                        bool isNumber1Valid = decimal.TryParse( parts[1], NumberFormatInfo.InvariantInfo, out number1 );
 
-                        bool isNumber2Valid = decimal.TryParse( parts[2].Trim().Replace(".", ","), NumberStyles.Number, CultureInfo.InvariantCulture, out number2 );
+                        bool isNumber2Valid = decimal.TryParse( parts[2], NumberFormatInfo.InvariantInfo , out number2 );
 
                       
                         if (isDateValid && isNumber1Valid && isNumber2Valid)
                         {
                             Data newData = new Data(date, number1, number2, text);
                             dataList.Add(newData);
-                          //  Console.WriteLine(newData);
+                           Console.WriteLine(newData);
                         }
                         else
                         {

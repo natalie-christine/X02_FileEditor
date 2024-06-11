@@ -1,9 +1,11 @@
 ﻿using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace A02_CSV
 {
     public class EditData
     {
+        Data data; 
 
         public List<Data> DataEditor(List<Data> dataList)
         {
@@ -22,7 +24,12 @@ namespace A02_CSV
             Console.WriteLine("2 - Zahl2");
             Console.WriteLine("3 - Text");
 
-
+            int extraColumnIndex = 4;
+            foreach (var column in selectedData.AdditionalColumns.Keys)
+            {
+                Console.WriteLine($"{extraColumnIndex++} - {column}");
+            }
+            
             string columnChoice = Console.ReadLine();
 
             Console.WriteLine("Gib den neuen Wert ein:");
@@ -33,7 +40,7 @@ namespace A02_CSV
                     if (DateTime.TryParseExact(Console.ReadLine(), "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newDate))
                     {
                         selectedData.Date = newDate;
-                        selectedData.OriginalDate = null;  // Clear original value if successfully parsed
+                        selectedData.OriginalDate = null;  
                     }
                     else
                     {
@@ -44,10 +51,10 @@ namespace A02_CSV
 
 
                 case "1":
-                    if (decimal.TryParse(Console.ReadLine().Replace(".", ","), NumberStyles.Any, new CultureInfo("de-DE"), out decimal newNumber1))
+                    if (decimal.TryParse(Console.ReadLine().Replace(".", ","), NumberStyles.AllowDecimalPoint, new CultureInfo("de-DE"), out decimal newNumber1))
                     {
                         selectedData.Number1 = newNumber1;
-                        selectedData.OriginalNumber1 = null;  // Clear original value if successfully parsed
+                        selectedData.OriginalNumber1 = null;  
                     }
                     else
                     {
@@ -61,7 +68,7 @@ namespace A02_CSV
                     if (decimal.TryParse(Console.ReadLine().Replace(".", ","), NumberStyles.Any, new CultureInfo("de-DE"), out decimal newNumber2))
                     {
                         selectedData.Number2 = newNumber2;
-                        selectedData.OriginalNumber2 = null;  // Clear original value if successfully parsed
+                        selectedData.OriginalNumber2 = null;  
                     }
                     else
                     {

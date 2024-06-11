@@ -6,9 +6,10 @@ namespace A02_CSV
 {
     public class WriteCSV
     {
+        int version = 1; 
         public void CSV_Writer(List<Data> dataList)
         {
-            string outputPath = "C:\\Users\\nscho\\Documents\\B01\\CSV_Export.txt";
+            string outputPath = "C:\\Users\\nscho\\Documents\\B01\\0" + version +"_OutputFile.txt";
 
             try
             {
@@ -23,6 +24,7 @@ namespace A02_CSV
                 }
 
                 Console.WriteLine("Data has been written to output file.");
+                version++; 
             }
             catch (Exception ex)
             {

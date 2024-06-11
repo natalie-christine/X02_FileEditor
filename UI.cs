@@ -7,17 +7,19 @@
             EditData editData = new EditData();
             ReadCSV readCSV = new ReadCSV();
             WriteCSV writeCSV = new WriteCSV();
+            ExpandDataList expandDataList = new ExpandDataList();
+            AddData addData = new AddData();
             List<Data> dataList = readCSV.CSV_Reader();
             bool play = true;
 
             do
             { 
                 string[,] choices = {
-                    {"0", "Show DataList"},
-                    {"1", "Edit DataList"},
-                    {"2", "Save DataList"},
-             /*        {"3", "Add Row/ Collum"},
-                    {"4", "delete"}, */
+                    {"0", "DataList anzeigen"},
+                    {"1", "DataList bearbeiten"},
+                    {"2", "DataList speichern"},
+                    {"3", "Spalte hinzufügen"},
+                    {"4", "Daten hinzugügen"},
                     {"5", "Exit"},
                 };
 
@@ -32,22 +34,23 @@
                         break;
 
                     case 1:
-                        Console.WriteLine("Hier kannst du die Liste Bearbeiten");
+                        Console.WriteLine("Hier kannst du die Daten in der Liste bearbeiten");
                         dataList = editData.DataEditor(dataList); 
                         break;
 
                     case 2:
-                        Console.WriteLine("Hier kannst du die Daten speichern");
+                        Console.WriteLine("DatenListe wurde gespeichert.");
                         writeCSV.CSV_Writer(dataList);  
                         break;
 
                     case 3:
-                        Console.WriteLine("Hier kannst du eine Neue Reihe hinzufügen");
-                     //   editData.AddRow();
+                        Console.WriteLine("Hier kannst du die Datenliste erweitern");
+                        expandDataList.AddColumn(dataList);
                         break;
 
                     case 4:
-                        Console.WriteLine(". . . . .");
+                        Console.WriteLine("Hier kannst du neue Daten hinzufügen");
+                        addData.AddDataToDataList(dataList); 
                         break;
             
 
@@ -74,10 +77,12 @@
 
         private static void ShowDataList(List<Data> dataList)
         {
-            foreach (var data in dataList)
-            {
-                Console.WriteLine(data);
+
+            for (int i = 0;i < dataList.Count;i++) {
+            
+                Console.WriteLine(i + ". " + dataList[i]);
             }
+            Console.WriteLine(); 
         }
     }
 }
