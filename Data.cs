@@ -39,10 +39,12 @@ namespace A02_CSV
         public override string ToString()
         {
             string additionalColumns = string.Join(",", AdditionalColumns.Select(kv => kv.Value));
+
+
             if (Date.HasValue && Number1.HasValue && Number2.HasValue)
             {
            
-                return $"{Date:dd.MM.yyyy},{Number1.Value.ToString("0.##", NumberFormatInfo.InvariantInfo)},{Number2.Value.ToString("0.##", NumberFormatInfo.InvariantInfo)},{Input}{(string.IsNullOrEmpty(additionalColumns) ? "" : "," + additionalColumns)}";
+                return $"{Date:dd.MM.yyyy},{Number1.Value.ToString("0.###", NumberFormatInfo.InvariantInfo)},{Number2.Value.ToString("0.##", NumberFormatInfo.InvariantInfo)},{Input}{(string.IsNullOrEmpty(additionalColumns) ? "" : "," + additionalColumns)}";
             }
             else
             {

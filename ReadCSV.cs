@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace A02_CSV
 {
@@ -11,7 +12,7 @@ namespace A02_CSV
 
         public List<Data> CSV_Reader()
         {
-            string path = "C:\\Users\\nscho\\Documents\\B01\\01_InputFile.txt";
+            string path = "C:\\Users\\nscho\\Documents\\B01\\01_InputFile.csv";
 
             if (string.IsNullOrEmpty(path) || !File.Exists(path))
             {
@@ -36,12 +37,18 @@ namespace A02_CSV
 
                 for (int i = 0; i < contentList.Count; i++)
                 {
-                    // Überspringe die Kopfzeile
-                    if (i == 0) continue;
-
                     string[] parts = contentList[i].Split(',');
 
-                    if (parts.Length == 4)
+                    // Überspringe die Kopfzeile
+                    if (i == 0)
+                    {
+                        continue; 
+                       /* Data originalData = new Data(parts[0], parts[1], parts[2], parts[3]);
+                        dataList.Add(originalData);
+                       */
+                    }
+
+                    if (parts.Length >= 4 && i > 0)
                     {
                         DateTime date; decimal number1, number2;
                         string text = parts[3].Trim();
@@ -57,7 +64,7 @@ namespace A02_CSV
                         {
                             Data newData = new Data(date, number1, number2, text);
                             dataList.Add(newData);
-                           Console.WriteLine(newData);
+                       //    Console.WriteLine(newData);
                         }
                         else
                         {

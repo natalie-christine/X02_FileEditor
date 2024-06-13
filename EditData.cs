@@ -1,19 +1,19 @@
-﻿using System.Globalization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace A02_CSV
 {
     public class EditData
     {
-        Data data; 
-
         public List<Data> DataEditor(List<Data> dataList)
         {
             Console.WriteLine("Welche Reihe möchtest du bearbeiten? (Nummer eingeben):");
             if (!int.TryParse(Console.ReadLine(), out int rowIndex) || rowIndex < 0 || rowIndex >= dataList.Count)
             {
                 Console.WriteLine("Ungültige Reihe.");
-                return null;
+                return dataList;
             }
 
             Data selectedData = dataList[rowIndex];
@@ -29,18 +29,19 @@ namespace A02_CSV
             {
                 Console.WriteLine($"{extraColumnIndex++} - {column}");
             }
-            
+
             string columnChoice = Console.ReadLine();
 
             Console.WriteLine("Gib den neuen Wert ein:");
+            string newValue = Console.ReadLine();
 
             switch (columnChoice)
             {
                 case "0":
-                    if (DateTime.TryParseExact(Console.ReadLine(), "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newDate))
+                    if (DateTime.TryParseExact(newValue, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newDate))
                     {
                         selectedData.Date = newDate;
-                        selectedData.OriginalDate = null;  
+                        Console.WriteLine("Datum erfolgreich aktualisiert.");
                     }
                     else
                     {
@@ -48,13 +49,11 @@ namespace A02_CSV
                     }
                     break;
 
-
-
                 case "1":
-                    if (decimal.TryParse(Console.ReadLine().Replace(".", ","), NumberStyles.AllowDecimalPoint, new CultureInfo("de-DE"), out decimal newNumber1))
+                    if (decimal.TryParse(newValue.Replace(".", ","), NumberStyles.AllowDecimalPoint, new CultureInfo("de-DE"), out decimal newNumber1))
                     {
                         selectedData.Number1 = newNumber1;
-                        selectedData.OriginalNumber1 = null;  
+                        Console.WriteLine("Zahl1 erfolgreich aktualisiert.");
                     }
                     else
                     {
@@ -62,13 +61,11 @@ namespace A02_CSV
                     }
                     break;
 
-
                 case "2":
-
-                    if (decimal.TryParse(Console.ReadLine().Replace(".", ","), NumberStyles.Any, new CultureInfo("de-DE"), out decimal newNumber2))
+                    if (decimal.TryParse(newValue.Replace(".", ","), NumberStyles.Any, new CultureInfo("de-DE"), out decimal newNumber2))
                     {
                         selectedData.Number2 = newNumber2;
-                        selectedData.OriginalNumber2 = null;  
+                        Console.WriteLine("Zahl2 erfolgreich aktualisiert.");
                     }
                     else
                     {
@@ -76,20 +73,27 @@ namespace A02_CSV
                     }
                     break;
 
-
                 case "3":
-                    selectedData.Input = Console.ReadLine();
+                    selectedData.Input = newValue;
+                    Console.WriteLine("Text erfolgreich aktualisiert.");
                     break;
+
                 default:
-                    Console.WriteLine("Ungültige Spalte.");
+                    if (int.TryParse(columnChoice, out int additionalIndex) && additionalIndex >= 4 && additionalIndex < extraColumnIndex)
+                    {
+                        int actualIndex = additionalIndex - 4;
+                        var columnKey = selectedData.AdditionalColumns.Keys.ElementAt(actualIndex);
+                        selectedData.AdditionalColumns[columnKey] = newValue;
+                        Console.WriteLine($"{columnKey} erfolgreich aktualisiert.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ungültige Spalte.");
+                    }
                     break;
-
             }
+
             return dataList;
-
-            Console.WriteLine("Wert wurde erfolgreich aktualisiert.");
         }
-
-
     }
 }

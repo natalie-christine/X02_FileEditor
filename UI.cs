@@ -9,6 +9,7 @@
             WriteCSV writeCSV = new WriteCSV();
             ExpandDataList expandDataList = new ExpandDataList();
             AddData addData = new AddData();
+            DeleteData deleteData = new DeleteData();
             List<Data> dataList = readCSV.CSV_Reader();
             bool play = true;
 
@@ -20,7 +21,8 @@
                     {"2", "DataList speichern"},
                     {"3", "Spalte hinzufügen"},
                     {"4", "Daten hinzugügen"},
-                    {"5", "Exit"},
+                    {"5", "Datenreihe löschen"},
+                    {"6", "Exit"},
                 };
 
                 PrintTable(choices);
@@ -40,12 +42,12 @@
 
                     case 2:
                         Console.WriteLine("DatenListe wurde gespeichert.");
-                        writeCSV.CSV_Writer(dataList);  
+                      new WriteCSV().CSV_Writer(dataList);  
                         break;
 
                     case 3:
                         Console.WriteLine("Hier kannst du die Datenliste erweitern");
-                        expandDataList.AddColumn(dataList);
+                        new ExpandDataList().AddColumn(dataList);
                         break;
 
                     case 4:
@@ -55,8 +57,14 @@
             
 
                     case 5:
+                        Console.WriteLine("Hier kannst du eine Datenreihe löschen");
+                        deleteData.DeleteDataFromDataList(dataList);   
+                        break;
+
+                    case 6:
                         Console.WriteLine("Auf Wiedersehen! ");
                         play = false;
+                        Thread.Sleep(1000);
                         break;
 
                     default:
@@ -75,14 +83,33 @@
             }
         }
 
-        private static void ShowDataList(List<Data> dataList)
+        public static void ShowDataList(List<Data> dataList)
         {
-
-            for (int i = 0;i < dataList.Count;i++) {
-            
-                Console.WriteLine(i + ". " + dataList[i]);
+            if (dataList.Count == 0)
+            {
+                Console.WriteLine("Die Datenliste ist leer.");
+                return;
             }
-            Console.WriteLine(); 
+
+            // Header anzeigen
+            var standardHeaders = "Datum,Zahl1,Zahl2,Text";
+            var additionalHeaders = string.Join(",", dataList[0].AdditionalColumns.Keys);
+            var header = standardHeaders;
+
+            if (!string.IsNullOrEmpty(additionalHeaders))
+            {
+                header += "," + additionalHeaders;
+            }
+
+            Console.WriteLine($"0. {header}");
+
+            // Daten anzeigen
+            for (int i = 0; i < dataList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {dataList[i]}");
+            }
+            Console.WriteLine();
         }
     }
 }
+
