@@ -25,13 +25,14 @@ namespace A02_CSV
             string deletingRow = Console.ReadLine();
 
 
-            int parseIndex = int.Parse(deletingRow);
+            int parseIndex = int.Parse(deletingRow) ;
+             
 
 
             if (parseIndex > 0 && parseIndex < dataList.Count)
             {
               
-                Data removedItem = dataList[parseIndex];
+                Data removedItem = dataList[parseIndex-1];
                 dataList.RemoveAt(parseIndex);
 
                 Console.WriteLine($"Die Datenreihe wurde erfolgreich entfernt:");

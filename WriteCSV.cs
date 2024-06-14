@@ -11,7 +11,7 @@ namespace A02_CSV
 
         public void CSV_Writer(List<Data> dataList)
         {
-            string outputPath = $"C:\\Users\\nscho\\Documents\\B01\\0{version}_OutputFile.txt";
+            string outputPath = $"C:\\Users\\nscho\\Documents\\B01\\0{DateTime.Now.ToString("yyyyMMddHHmmssfff")}_OutputFile.txt";
 
             try
             {

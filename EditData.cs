@@ -10,13 +10,14 @@ namespace A02_CSV
         public List<Data> DataEditor(List<Data> dataList)
         {
             Console.WriteLine("Welche Reihe möchtest du bearbeiten? (Nummer eingeben):");
-            if (!int.TryParse(Console.ReadLine(), out int rowIndex) || rowIndex < 0 || rowIndex >= dataList.Count)
+
+            if (!int.TryParse(Console.ReadLine(), out int rowIndex) || rowIndex < 0 || rowIndex >= dataList.Count  )
             {
                 Console.WriteLine("Ungültige Reihe.");
                 return dataList;
             }
-
-            Data selectedData = dataList[rowIndex];
+            
+            Data selectedData = dataList[rowIndex-1];
 
             Console.WriteLine("Welche Spalte möchtest du bearbeiten?");
             Console.WriteLine("0 - Datum");
